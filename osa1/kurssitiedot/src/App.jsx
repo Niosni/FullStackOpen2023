@@ -8,9 +8,9 @@ const Header = (props) => {
 
 const Part = (props) => {
   return (
-    <>
+    <p>
       {props.content.name} {props.content.exercises}
-    </>
+    </p>
   )
 }
 
@@ -18,9 +18,7 @@ const Content = (props) => {
   return (
     <div>
       {props.content.map(content => (
-        <p>
-          <Part content={content} key={content.name} />
-        </p>
+        <Part key={content.name} content={content} />
       ))}
     </div>
   )
