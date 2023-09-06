@@ -31,7 +31,7 @@ const App = () => {
     setSelected(rand)
   }
 
-  const handleVote = (props) => {
+  const handleVote = () => {
     const newVotes = votes.concat()
     newVotes[selected] += 1
     setVotes(newVotes)
@@ -39,8 +39,7 @@ const App = () => {
 
   let highestVoteCount = Math.max(...votes);
   let mostPopularAnecdote = votes.indexOf(highestVoteCount);
-  console.log(mostPopularAnecdote)
-
+  
   return (
     <div>
       <h1>Anecdote of the day</h1>
