@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const Feedback = () => (<h1>Give Feedback</h1>)
+const FeedbackHeader = () => (<h1>Give Feedback</h1>)
 
 const Button = ({handleClick, text}) => (
   <button onClick={handleClick}>
@@ -10,10 +10,15 @@ const Button = ({handleClick, text}) => (
 
 //Task 1.8 already done
 const Statistics = ({goodFeedback, neutralFeedback, badFeedback, totalFeedback, averageValue}) => {
+  const header = <h1>Statistics</h1>
+  
+  if (!totalFeedback){
+    return (<div>{header} No feedback given</div>)
+  }
   const positive = goodFeedback === 0 ? 0 : (goodFeedback / totalFeedback *100)
   return (
     <div>
-      <h1>Statistics</h1>
+      {header}
         <ul>
           <li>
             Good: {goodFeedback}
@@ -69,7 +74,7 @@ const App = () => {
   
   return (
     <div>
-      <Feedback />
+      <FeedbackHeader />
       <Button handleClick={() => handleClick(1)} text='Good' />
       <Button handleClick={() => handleClick(0)} text='Neutral' />
       <Button handleClick={() => handleClick(-1)} text='Bad' />
