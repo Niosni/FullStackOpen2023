@@ -10,9 +10,10 @@ const Button = ({handleClick, text}) => (
 
 const StatisticLine = (props) => {
   return (
-    <>
-      {props.text} : {props.count}
-    </>
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.count}</td>
+    </tr>
   )
 }
 
@@ -23,30 +24,20 @@ const Statistics = ({goodFeedback, neutralFeedback, badFeedback, totalFeedback, 
     return (<div>{header} No feedback given</div>)
   }
   const positive = goodFeedback === 0 ? 0 : (goodFeedback / totalFeedback *100)
+  const positiveWithPrc = positive.toString().concat(" %")
   return (
     <div>
       {header}
-        <ul>
-          <li>
-            <StatisticLine text="Good" count={goodFeedback}/>
-          </li>
-          <li>
-            <StatisticLine text="Neutral" count={neutralFeedback}/>
-          </li>
-          <li>
-            <StatisticLine text="Bad" count={badFeedback}/>
-          </li>
-
-        </ul>
-        <p>
-          Total: {totalFeedback}
-        </p>
-        <p>
-          Average: {averageValue}
-        </p>
-        <p>
-          Positive: {positive} %
-        </p>
+      <table>
+        <tbody>
+          <StatisticLine text="Good" count={goodFeedback}/>
+          <StatisticLine text="Neutral" count={neutralFeedback}/>
+          <StatisticLine text="Bad" count={badFeedback}/>
+          <StatisticLine text="Total" count={totalFeedback}/>
+          <StatisticLine text="Average" count={averageValue}/>
+          <StatisticLine text="Positive" count={positiveWithPrc}/>
+        </tbody>
+      </table>
     </div>
   )
 }
