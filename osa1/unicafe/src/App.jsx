@@ -8,6 +8,7 @@ const Button = ({handleClick, text}) => (
   </button>
 )
 
+//Task 1.8 already done
 const Statistics = ({goodFeedback, neutralFeedback, badFeedback, totalFeedback, averageValue}) => {
   const positive = goodFeedback === 0 ? 0 : (goodFeedback / totalFeedback *100)
   return (
