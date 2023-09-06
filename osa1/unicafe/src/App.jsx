@@ -8,8 +8,8 @@ const Button = ({handleClick, text}) => (
   </button>
 )
 
-const Statistics = ({goodFeedback, neutralFeedback, badFeedback}) => {
-  console.log(goodFeedback)
+const Statistics = ({goodFeedback, neutralFeedback, badFeedback, totalFeedback, averageValue}) => {
+  const positive = goodFeedback === 0 ? 0 : (goodFeedback / totalFeedback *100)
   return (
     <div>
       <h1>Statistics</h1>
@@ -24,6 +24,15 @@ const Statistics = ({goodFeedback, neutralFeedback, badFeedback}) => {
             Bad: {badFeedback}
           </li>
         </ul>
+        <p>
+          Total: {totalFeedback}
+        </p>
+        <p>
+          Average: {averageValue}
+        </p>
+        <p>
+          Positive: {positive} %
+        </p>
     </div>
   )
 }
@@ -33,32 +42,43 @@ const App = () => {
   const [goodFeedback, setGoodFeedback] = useState(0)
   const [neutralFeedback, setNeutralFeedback] = useState(0)
   const [badFeedback, setBadFeedback] = useState(0)
+  const [totalFeedback, setTotalFeedback] = useState(0)
+  const [averageValue, setAverageValue] = useState(0)
 
   const handleClick = (feedback) => {
-    switch (feedback){
-      case 'good':
-        setGoodFeedback(goodFeedback + 1)
-        break;
-      case 'neutral':
-        setNeutralFeedback(neutralFeedback + 1)
-        break;
-      case 'bad':
-        setBadFeedback(badFeedback + 1)
-        break;
+    let newGoodFeedback = goodFeedback
+    let newNeutralFeedback = neutralFeedback
+    let newBadFeedback = badFeedback
+    
+    if (feedback === 1) {
+      setGoodFeedback(++newGoodFeedback)
+    } else if (feedback === 0) {
+      setNeutralFeedback(++newNeutralFeedback)
+    } else if (feedback === -1) {
+      setBadFeedback(++newBadFeedback)
     }
-
-
+    
+    const newTotalFeedback = totalFeedback + 1
+    setTotalFeedback(newTotalFeedback)
+    const newAverageValue = (newGoodFeedback - newBadFeedback) / newTotalFeedback
+    setAverageValue(newAverageValue)
   }
+
+
+  
   return (
     <div>
       <Feedback />
-      <Button handleClick={() => handleClick('good')} text='Good' />
-      <Button handleClick={() => handleClick('neutral')} text='Neutral' />
-      <Button handleClick={() => handleClick('bad')} text='Bad' />
+      <Button handleClick={() => handleClick(1)} text='Good' />
+      <Button handleClick={() => handleClick(0)} text='Neutral' />
+      <Button handleClick={() => handleClick(-1)} text='Bad' />
       <Statistics 
         goodFeedback={goodFeedback}
         neutralFeedback={neutralFeedback}
-        badFeedback={badFeedback}/>
+        badFeedback={badFeedback}
+        totalFeedback={totalFeedback}
+        averageValue={averageValue}
+      />
     </div>
   )
 }
