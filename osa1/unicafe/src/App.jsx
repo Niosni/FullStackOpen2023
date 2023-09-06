@@ -1,34 +1,65 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+const Feedback = () => (<h1>Give Feedback</h1>)
 
+const Button = ({handleClick, text}) => (
+  <button onClick={handleClick}>
+    {text}
+  </button>
+)
+
+const Statistics = ({goodFeedback, neutralFeedback, badFeedback}) => {
+  console.log(goodFeedback)
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <h1>Statistics</h1>
+        <ul>
+          <li>
+            Good: {goodFeedback}
+          </li>
+          <li>
+            Neutral: {neutralFeedback}
+          </li>
+          <li>
+            Bad: {badFeedback}
+          </li>
+        </ul>
+    </div>
+  )
+}
+
+const App = () => {
+  // tallenna napit omaan tilaansa
+  const [goodFeedback, setGoodFeedback] = useState(0)
+  const [neutralFeedback, setNeutralFeedback] = useState(0)
+  const [badFeedback, setBadFeedback] = useState(0)
+
+  const handleClick = (feedback) => {
+    switch (feedback){
+      case 'good':
+        setGoodFeedback(goodFeedback + 1)
+        break;
+      case 'neutral':
+        setNeutralFeedback(neutralFeedback + 1)
+        break;
+      case 'bad':
+        setBadFeedback(badFeedback + 1)
+        break;
+    }
+
+
+  }
+  return (
+    <div>
+      <Feedback />
+      <Button handleClick={() => handleClick('good')} text='Good' />
+      <Button handleClick={() => handleClick('neutral')} text='Neutral' />
+      <Button handleClick={() => handleClick('bad')} text='Bad' />
+      <Statistics 
+        goodFeedback={goodFeedback}
+        neutralFeedback={neutralFeedback}
+        badFeedback={badFeedback}/>
+    </div>
   )
 }
 

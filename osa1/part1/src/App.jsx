@@ -1,31 +1,27 @@
-const Hello = (props) => {
+import React, { useState } from 'react'
+import ReactDOM from 'react-dom'
 
-  console.log(props)
-  return (
-    <div>
-      <p>
+const Display = props => <div>{props.value}</div>
 
-        Hello {props.name}, you are {props.age} years old
-      </p>
-    </div>
-  )
-}
+const Button = (props) => (
+  <button onClick={props.handleClick}>{props.text}</button>
+)
 
-const App = () => {
-  const friends = [
-    { name: 'Leevi', age: 4 },
-    { name: 'Venla', age: 10 },
-  ]
+const App = (props) => {
+  const [value, setValue] = useState(10)
+
+  const setToValue = (newValue) => {
+    setValue(newValue)
+  }
 
   return (
     <div>
-      <p>{friends[0].name} {friends[0].age}</p>
-      <p>{friends[1].name} {friends[1].age}</p>
+      <Display value={value} />
+      <Button handleClick={() => setToValue(1000)} text="thousand" />
+      <Button handleClick={() => setToValue(0)} text="reset" />
+      <Button handleClick={() => setToValue(value + 1)} text="increment" />
     </div>
   )
 }
-
-
-
 
 export default App
