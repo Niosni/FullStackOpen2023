@@ -1,70 +1,42 @@
-const Header = (props) => {
-  return (
-    <>
-      <h1>{props.course.name}</h1>
-    </>
-  )
-}
-
-const Part = (props) => {
-  return (
-    <p>
-      {props.content.name} {props.content.exercises}
-    </p>
-  )
-}
-
-const Content = (props) => {
-  console.log(props)
-  return (
-    <div>
-      {props.course.parts.map(content => (
-        <Part key={content.name} content={content} />
-      ))}
-    </div>
-  )
-}
-
-const Total = (props) => {
-  const total = countExercises(props.course.parts)
-  return (
-    <p>Number of exercises {total}</p>
-  )
-}
-
-function countExercises(content) {
-  let total = 0
-  for (const c of content) {
-    total += c.exercises
-  }
-  return total
-}
+import Course from './components/Course'
 
 const App = () => {
   const course = {
     name: 'Half Stack application development',
+    id: 1,
     parts: [
       {
         name: 'Fundamentals of React',
-        exercises: 10
+        exercises: 10,
+        id: 1
       },
       {
         name: 'Using props to pass data',
-        exercises: 7
+        exercises: 7,
+        id: 2
       },
       {
         name: 'State of a component',
-        exercises: 14
+        exercises: 14,
+        id: 3
       }
     ]
   }
   return (
     <div>
-      <Header course={course}/>
-      <Content course={course}/>
-      <Total course={course}/>
+      <Course course={course} />
     </div>
   )
 }
+/* Rakenne voi näyttää esim tältä:
+App
+  Course
+    Header
+    Content
+      Part
+      Part
+      ...
+*/
+
 
 export default App
