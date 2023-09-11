@@ -1,7 +1,7 @@
 const Filter = ({filterValue, handleFilterChange}) => {
     return (
         <div>
-            <input 
+            filter shown with <input 
                 value={filterValue}
                 onChange={handleFilterChange}
             />
