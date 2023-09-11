@@ -68,35 +68,22 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
-      <div>
-        filter shown with
-        <input 
-          value={filterValue}
-          onChange={handleFilterChange}
-        />
-      </div>
+      <Filter 
+        filterValue={filterValue}
+        handleFilterChange={handleFilterChange}
+      />
       <h2>Add a new entry</h2>
-      <form onSubmit={addDetails}>
-        <div>
-          name: 
-            <input 
-              value={newName}
-              onChange={handleNameChange}
-            />
-        </div>
-        <div>
-          number:
-            <input 
-              value={newNumber}
-              onChange={handleNumberChange}
-            />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm 
+        newName={newName}
+        newNumber={newNumber}
+        addDetails={addDetails}
+        handleNameChange={handleNameChange}
+        handleNumberChange={handleNumberChange}
+      />
       <h2>Numbers</h2>
-      {listToShow}
+      <Persons 
+        listToShow={listToShow}
+      />
     </div>
   )
 

@@ -1,5 +1,9 @@
-const Persons = (params) => {
-    
+const Persons = ({listToShow}) => {
+    return (
+        <>
+            {listToShow}
+        </>
+    )
 }
 
 export default Persons
