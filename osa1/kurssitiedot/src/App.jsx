@@ -77,7 +77,7 @@ const App = () => {
     <div>
       <PageHeader />
       {courses.map(course => (
-        <div>
+        <div key={course.name}>
           <Course course={course} />
         </div>
       ))}
