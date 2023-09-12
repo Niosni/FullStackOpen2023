@@ -61,8 +61,9 @@ const App = () => {
       })
   }
 
-  const removePerson = (id) => {
-    personService
+  const removePerson = (id, name) => {
+    if (confirm(`Delete ${name}?`)) {
+      personService
       .remove(id)
       .then(response => {
         setPersons(persons.filter( person =>
@@ -72,6 +73,8 @@ const App = () => {
       .catch(error => {
         console.log('moro');
       })
+    }
+    return
   }
 
   // Filter by name
