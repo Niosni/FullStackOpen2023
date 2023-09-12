@@ -31,14 +31,33 @@ const App = () => {
     setFilterValue(event.target.value)
   }
 
+  const updateNumber = () => {
+    const oldPersonObject = persons.find(p => p.name == newName)
+    const newPersonObject = {
+      ...oldPersonObject,
+      number: newNumber
+    }
+    personService
+      .update(oldPersonObject.id, newPersonObject)
+      .then(returnedPerson => 
+        setPersons(persons.map(person =>
+          person.id !== newPersonObject.id ? person : returnedPerson
+        ))
+      )
+  }
+
   const addDetails = (event) => {
     event.preventDefault()
     
     //handle duplicate names
     const allNames = persons.map(person => person.name)
     if (allNames.includes(newName)) {
-      alert(`${newName} is already added to the phonebook!`)
-      return;
+      if (confirm(`${newName} is already added to the phonebook. Replace the old number with a new one?`)) {
+        updateNumber()
+        return
+      } else {
+        return
+      }
     }
 
     let personObject = {
@@ -84,12 +103,6 @@ const App = () => {
       ))
     : persons
 
-  // Create the list to show
-  let listToShow = personsToShow.map(person =>
-    <div key={person.name}>{person.name} {person.number}</div>
-  )
-  
-  
 
   return (
     <div>
@@ -108,7 +121,6 @@ const App = () => {
       />
       <h2>Numbers</h2>
       <Persons 
-        listToShow={listToShow}
         personsToShow={personsToShow}
         removePerson={removePerson}
       />
