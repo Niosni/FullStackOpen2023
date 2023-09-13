@@ -3,7 +3,7 @@ const Persons = ({personsToShow, removePerson}) => {
         <>
             {personsToShow.map(person => {
                 return (
-                <div key={person.name}>
+                <div className='person' key={person.name}>
                     <p>{person.name} {person.number}
                         <button onClick={() => removePerson(person.id, person.name)}>
                             delete

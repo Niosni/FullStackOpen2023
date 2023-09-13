@@ -1,0 +1,50 @@
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: mintcream;
+    padding: 15px;
+}
+
+h1 {
+    color:blueviolet;
+}
+
+h2 {
+    color: rgb(139, 37, 139);
+}
+
+.person {
+    color: navy;
+    padding-top: 5px;
+    font-size: 20px;
+    background-color: azure;
+}
+
+.personForm {
+    background-color: beige;
+    padding: 15px;
+}
+
+.filter {
+    background-color: cornsilk;
+    padding: 10px
+}
+
+.error {
+    color: red;
+    background-color: lemonchiffon;
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .notification {
+    color: rgb(28, 143, 28);
+    background-color: azure;
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }

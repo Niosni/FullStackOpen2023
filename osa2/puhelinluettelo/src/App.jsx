@@ -2,13 +2,16 @@ import { useState, useEffect } from 'react'
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
+import Notification from './components/Notification';
 import personService from './services/persons'
+import './index.css'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filterValue, setFilterValue] = useState('')
+  const [notificationMessage, setNotificationMessage] = useState(null)
 
   useEffect(() => {
     personService
@@ -36,13 +39,35 @@ const App = () => {
       ...oldPersonObject,
       number: newNumber
     }
+
     personService
       .update(oldPersonObject.id, updatedPersonObject)
-      .then(returnedPerson => 
-        setPersons(persons.map(person =>
-          person.id !== updatedPersonObject.id ? person : returnedPerson
-        ))
+      .then(returnedPerson => {
+        if (returnedPerson) {
+          setPersons(persons.map(person =>
+            person.id !== updatedPersonObject.id ? person : returnedPerson
+          ))
+
+        } else {
+          console.log('nyt set error');
+          setNotificationMessage(
+            `${updatedPersonObject.name} can't be updated, as it's already deleted.`
+          )
+          setTimeout(()=>{
+            setNotificationMessage(null)
+          }, 5000)
+          setPersons(persons.filter(p => p.id !== oldPersonObject.id))
+        }
+      })
+      setNewName('')
+      setNewNumber('')
+      setNotificationMessage(
+        `${updatedPersonObject.name} updated.`
       )
+      setTimeout(()=>{
+        setNotificationMessage(null)
+      }, 5000)
+      
   }
 
   const askToUpdateNumber = () => {
@@ -75,6 +100,12 @@ const App = () => {
           setNewName('')
           setNewNumber('')
         })
+      setNotificationMessage(
+        `Added ${newPersonObject.name}`
+      )
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000)
     }
   }
 
@@ -86,9 +117,20 @@ const App = () => {
           setPersons(persons.filter( person =>
             person.id !== id
           ))
+            setNotificationMessage(
+              `${name} deleted.`
+            )
+            setTimeout(() => {
+              setNotificationMessage(null)
+            }, 5000)
         })
         .catch(error => {
-          alert('The person you tried to remove is not on the database. Please refresh the page.')
+          setNotificationMessage(
+            `${name} is already not on the database. Please refresh the page.`
+          )
+          setTimeout(() => {
+            setNotificationMessage(null)
+          }, 5000)
         })
     }
     return
@@ -118,6 +160,7 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h2>Numbers</h2>
+      <Notification message={notificationMessage} />
       <Persons 
         personsToShow={personsToShow}
         removePerson={removePerson}

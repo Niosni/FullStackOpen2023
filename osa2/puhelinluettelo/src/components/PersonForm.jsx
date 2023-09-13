@@ -1,6 +1,6 @@
 const PersonForm = ({newName, newNumber, addDetails, handleNameChange, handleNumberChange}) => {
     return (
-    <form onSubmit={addDetails}>
+    <form className='personForm' onSubmit={addDetails}>
         <div>
           name: 
             <input 
