@@ -68,8 +68,10 @@ const App = () => {
   }
 
   const showButton = (name) => {
-    setCountry(getCountryWithName(name))
+    const newCountry = getCountryWithName(name)
+    setCountry(newCountry)
     setShowCountryInfo(true)
+    getWeatherInfo(newCountry)
   }
   return (
     <>
