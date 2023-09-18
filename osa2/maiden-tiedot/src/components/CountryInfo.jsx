@@ -1,8 +1,6 @@
 const CountryName = ({country}) => {
-    console.log(country);
     const languages = Object.values(country.languages)
     const flag = country.flags
-    console.log(country.flags)
 
     return (
         <div>
@@ -13,7 +11,7 @@ const CountryName = ({country}) => {
                 Languages:
                 <ul>
                     {languages.map(language=>
-                        <li>{language}</li>
+                        <li key={language}>{language}</li>
                     )}
                 </ul>
             </div>

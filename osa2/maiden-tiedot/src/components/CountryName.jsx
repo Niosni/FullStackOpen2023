@@ -1,6 +1,6 @@
 const CountryName = ({countryName, showButton}) => {
     return (
-        <div>
+        <div key={countryName}>
             {countryName}
             <button onClick={showButton}>
                 show

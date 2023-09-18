@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import countryService from './services/countries'
+import weatherService from './services/weathers'
 import CountryList from './components/CountryList'
 import CountryInfo from './components/CountryInfo'
+import WeatherInfo from './components/WeatherInfo'
 
 const App = () => {
   const [country, setCountry] = useState(null)
@@ -9,6 +11,8 @@ const App = () => {
   const [countryNamesToShow, setCountryNamesToShow] = useState([])
   const [filterValue, setFilterValue] = useState('')
   const [showCountryInfo, setShowCountryInfo] = useState(false)
+  const [weatherInfo, setWeatherInfo] = useState(null)
+  const api_key = import.meta.env.VITE_API_KEY
 
   useEffect(() => {
     countryService
@@ -33,10 +37,13 @@ const App = () => {
       c.toLowerCase().includes(newFilterValue.toLowerCase())
     )
     setCountryNamesToShow(filteredCountries)
-    console.log(filteredCountries);
+    //console.log(filteredCountries);
     if (filteredCountries.length === 1) {
       setShowCountryInfo(true)
-      setCountry(getCountryWithName(filteredCountries[0]))
+      let newCountry = getCountryWithName(filteredCountries[0])
+      setCountry(newCountry)
+      getWeatherInfo(newCountry)
+      setCountryNamesToShow('')
     } else {
       setShowCountryInfo(false)
     }
@@ -46,6 +53,14 @@ const App = () => {
   let showSearch = false
   if (countryNamesToShow.length<10) {
     showSearch = true
+  }
+
+  const getWeatherInfo = (newCountry) => {
+    weatherService
+    .getWeather(api_key, newCountry.capitalInfo.latlng[0], newCountry.capitalInfo.latlng[1])
+    .then(response => {
+      setWeatherInfo(response)
+    })
   }
 
   const getCountryWithName = (name) => {
@@ -76,6 +91,12 @@ const App = () => {
             showButton={showButton}
           />}
       </div>
+        {weatherInfo 
+        ? <WeatherInfo 
+            weatherInfo={weatherInfo}
+          />
+        : <></>
+        }
 
     </>
   )
