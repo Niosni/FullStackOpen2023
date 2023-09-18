@@ -1,7 +1,10 @@
-const CountryName = ({countryName}) => {
+const CountryName = ({countryName, showButton}) => {
     return (
         <div>
             {countryName}
+            <button onClick={showButton}>
+                show
+            </button>
         </div>
     )
 }

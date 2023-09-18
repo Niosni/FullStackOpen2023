@@ -1,6 +1,6 @@
 import CountryName from "./CountryName"
 
-const CountryList = ({countryNamesToShow, showSearch}) => {
+const CountryList = ({countryNamesToShow, showSearch, showButton}) => {
     if (!showSearch) {
         return (
             <div>
@@ -19,6 +19,7 @@ const CountryList = ({countryNamesToShow, showSearch}) => {
                 <CountryName 
                     key={countryName}
                     countryName={countryName}
+                    showButton={() => showButton(countryName)}
                 />
             )}
         </div>

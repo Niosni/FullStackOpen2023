@@ -8,6 +8,7 @@ const App = () => {
   const [countryData, setCountryData] = useState([])
   const [countryNamesToShow, setCountryNamesToShow] = useState([])
   const [filterValue, setFilterValue] = useState('')
+  const [showCountryInfo, setShowCountryInfo] = useState(false)
 
   useEffect(() => {
     countryService
@@ -34,7 +35,10 @@ const App = () => {
     setCountryNamesToShow(filteredCountries)
     console.log(filteredCountries);
     if (filteredCountries.length === 1) {
+      setShowCountryInfo(true)
       setCountry(getCountryWithName(filteredCountries[0]))
+    } else {
+      setShowCountryInfo(false)
     }
     
   }
@@ -48,6 +52,10 @@ const App = () => {
     return countryData.filter(n => n.name.common === name)[0]
   }
 
+  const showButton = (name) => {
+    setCountry(getCountryWithName(name))
+    setShowCountryInfo(true)
+  }
   return (
     <>
       <div className='findCountry'>
@@ -60,11 +68,12 @@ const App = () => {
       </div>
 
       <div className='countryList'>
-        {countryNamesToShow.length===1 
+        {showCountryInfo 
         ? <CountryInfo country={country}/>
         : <CountryList
             countryNamesToShow={countryNamesToShow}
             showSearch={showSearch}
+            showButton={showButton}
           />}
       </div>
 
