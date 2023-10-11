@@ -1,5 +1,8 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
+
+app.use(cors())
 
 const requestLogger = (request, response, next) => {
   console.log('Method:', request.method)
@@ -51,6 +54,20 @@ app.get('/api/notes/:id', (request, response) => {
   } else {
     response.status(404).end()
   }
+})
+
+app.put('/api/notes/:id', (request, response) => {
+  const id = Number(request.params.id)
+  const changedNote = request.body
+  if (request.params.id && request.body.content) {
+    noteId = notes.indexOf(notes.find(note => note.id === id))
+    notes[noteId] = changedNote
+  
+    response.json(changedNote)
+  } else {
+    response.status(404).end()
+  }
+
 })
 
 app.delete('/api/notes/:id', (request, response) => {
