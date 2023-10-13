@@ -5,3 +5,13 @@ Content-Type: application/json
     "content": "VS Code Postitesti",
     "important": true
 }
+
+###
+
+POST https://notebackend.fly.dev/api/notes
+Content-Type: application/json
+
+{
+    "content": "VS Code Postitesti",
+    "important": true
+}
