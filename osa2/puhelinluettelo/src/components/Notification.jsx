@@ -1,16 +1,18 @@
 const Notification = ({message}) => {
     if (message === null) {
         return null
-    } else if (!message.toLowerCase().includes("del")) {
+    } else if (message.toLowerCase().includes("err")
+    || message.toLowerCase().includes("del")
+    ) {
         return (
-            <div className="notification">
+            <div className="error">
                 {message}
             </div>
         )
     }
 
     return (
-        <div className="error">
+        <div className="notification">
             {message}
         </div>
     )

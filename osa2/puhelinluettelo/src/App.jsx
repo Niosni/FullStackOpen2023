@@ -100,6 +100,11 @@ const App = () => {
           setNewName('')
           setNewNumber('')
         })
+        .catch(error => {
+          setNotificationMessage(
+            `Error: ${error.response.data.error}`
+          )
+        })
       setNotificationMessage(
         `Added ${newPersonObject.name}`
       )
