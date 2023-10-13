@@ -37,7 +37,7 @@ const App = () => {
     const oldPersonObject = persons.find(p => p.name == newName)
     const updatedPersonObject = {
       ...oldPersonObject,
-      number: newNumber
+      phonenumber: newNumber
     }
 
     personService
@@ -90,7 +90,7 @@ const App = () => {
     if (!personWasUpdated) {
       const newPersonObject = {
         name: newName,
-        number: newNumber
+        phonenumber: newNumber
       }
   
       personService
