@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import Filter from './components/Filter';
-import PersonForm from './components/PersonForm';
-import Persons from './components/Persons';
-import Notification from './components/Notification';
+import Filter from './components/Filter'
+import PersonForm from './components/PersonForm'
+import Persons from './components/Persons'
+import Notification from './components/Notification'
 import personService from './services/persons'
 import './index.css'
 
@@ -22,7 +22,7 @@ const App = () => {
   }, [])
 
   const handleNumberChange = (event) => {
-    setNewNumber(event.target.value);
+    setNewNumber(event.target.value)
   }
 
   const handleNameChange = (event) => {
@@ -34,7 +34,7 @@ const App = () => {
   }
 
   const updateNumber = () => {
-    const oldPersonObject = persons.find(p => p.name == newName)
+    const oldPersonObject = persons.find(p => p.name === newName)
     const updatedPersonObject = {
       ...oldPersonObject,
       phonenumber: newNumber
@@ -49,7 +49,7 @@ const App = () => {
           ))
 
         } else {
-          console.log('nyt set error');
+          console.log('nyt set error')
           setNotificationMessage(
             `${updatedPersonObject.name} can't be updated, as it's already deleted.`
           )
@@ -59,14 +59,14 @@ const App = () => {
           setPersons(persons.filter(p => p.id !== oldPersonObject.id))
         }
       })
-      setNewName('')
-      setNewNumber('')
-      setNotificationMessage(
-        `${updatedPersonObject.name} updated.`
-      )
-      setTimeout(()=>{
-        setNotificationMessage(null)
-      }, 5000)
+    setNewName('')
+    setNewNumber('')
+    setNotificationMessage(
+      `${updatedPersonObject.name} updated.`
+    )
+    setTimeout(()=>{
+      setNotificationMessage(null)
+    }, 5000)
       
   }
 
@@ -99,15 +99,15 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
+          setNotificationMessage(
+            `Added ${newPersonObject.name}`
+          )
         })
         .catch(error => {
           setNotificationMessage(
             `Error: ${error.response.data.error}`
           )
         })
-      setNotificationMessage(
-        `Added ${newPersonObject.name}`
-      )
       setTimeout(() => {
         setNotificationMessage(null)
       }, 5000)
@@ -118,18 +118,18 @@ const App = () => {
     if (confirm(`Delete ${name}?`)) {
       personService
         .remove(id)
-        .then(response => {
+        .then( () => {
           setPersons(persons.filter( person =>
             person.id !== id
           ))
-            setNotificationMessage(
-              `${name} deleted.`
-            )
-            setTimeout(() => {
-              setNotificationMessage(null)
-            }, 5000)
+          setNotificationMessage(
+            `${name} deleted.`
+          )
+          setTimeout(() => {
+            setNotificationMessage(null)
+          }, 5000)
         })
-        .catch(error => {
+        .catch( () => {
           setNotificationMessage(
             `${name} is already not on the database. Please refresh the page.`
           )
@@ -144,7 +144,7 @@ const App = () => {
   // Filter by name
   let personsToShow = filterValue 
     ? persons.filter((person) => 
-        person.name.toLowerCase().includes(filterValue.toLowerCase()
+      person.name.toLowerCase().includes(filterValue.toLowerCase()
       ))
     : persons
 
