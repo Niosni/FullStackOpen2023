@@ -1,0 +1,9 @@
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+  "title": "New PostgreSQL Course for Beginners",
+  "author": "Beau Carnes",
+  "url": "https://www.freecodecamp.org/news/posgresql-course-for-beginners/",
+  "likes": 0
+}
