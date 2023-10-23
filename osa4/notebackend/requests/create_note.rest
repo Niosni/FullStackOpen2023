@@ -1,5 +1,6 @@
 POST http://localhost:3001/api/notes
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlZTQ29kZSIsImlkIjoiNjUzNmEzNDM2ZTUwM2UxZGVmZjg4MTVhIiwiaWF0IjoxNjk4MDc5OTA0fQ.N0_8_3AlvtWM_KsP7HGJXTDzpfIYf8M_okMbWU3QVWo
 
 {
     "content": "VS Code Postitesti",
