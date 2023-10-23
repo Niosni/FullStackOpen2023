@@ -7,7 +7,7 @@ module.exports = {
     'jest': true,
   },
   'extends': [
-    'eslint:recommended',
+    //'eslint:recommended',
     //'plugin:react/recommended'
   ],
   'overrides': [
