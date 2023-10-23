@@ -86,6 +86,38 @@ describe('Blog API test', () => {
 
   })
 
+  test('Task 4.13: a note can be deleted', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToDelete = blogsAtStart[0]
+
+
+    await api
+      .delete(`/api/blogs/${blogToDelete.id}`)
+      .expect(204)
+
+    const blogsAtEnd = await helper.blogsInDb()
+
+    expect(blogsAtEnd).toHaveLength(
+      helper.initialBlogs.length - 1
+    )
+
+    const titles = blogsAtEnd.map(blog => blog.title)
+
+    expect(titles).not.toContain(blogToDelete.title)
+  })
+
+  test('Task 4.14: PUT change existing blog content', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToUpdate = blogsAtStart[0]
+    await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send({ likes: blogToUpdate.likes+1 })
+      .expect(200)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd[0].likes).toEqual(blogToUpdate.likes+1)
+  })
+
   test('A specific blog is in the returned blogs', async () => {
     const response = await api.get('/api/blogs')
 
@@ -124,25 +156,7 @@ describe('Blog API test', () => {
     expect(resultBlog.body).toEqual(blogToView)
   })
 
-  test('a note can be deleted', async () => {
-    const blogsAtStart = await helper.blogsInDb()
-    const blogToDelete = blogsAtStart[0]
 
-
-    await api
-      .delete(`/api/blogs/${blogToDelete.id}`)
-      .expect(204)
-
-    const blogsAtEnd = await helper.blogsInDb()
-
-    expect(blogsAtEnd).toHaveLength(
-      helper.initialBlogs.length - 1
-    )
-
-    const titles = blogsAtEnd.map(blog => blog.title)
-
-    expect(titles).not.toContain(blogToDelete.title)
-  })
 
   afterAll(async () => {
     await mongoose.connection.close()
