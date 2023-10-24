@@ -4,13 +4,39 @@ const app = require('../app')
 const Blog = require('../models/blog')
 const helper = require('./test_helper')
 
+let token1 = ''
+let token2 = ''
+
 beforeEach(async () => {
+  // Get user tokens
+  const testUserArray = await helper.getLoginDetails()
+  const loginResponse1 = await api
+    .post('/api/login')
+    .send({
+      username: testUserArray[0].username,
+      password: testUserArray[0].password
+    })
+
+  token1 = loginResponse1.body.token
+  const loginResponse2 = await api
+    .post('/api/login')
+    .send({
+      username: testUserArray[1].username,
+      password: testUserArray[1].password
+    })
+
+  token2 = loginResponse2.body.token
+  const blogsToAdd = helper.initialBlogs
+
   await Blog.deleteMany({})
-  await Blog.insertMany(helper.initialBlogs)
-  // const blogObjects = helper.initialBlogs
-  //   .map(blog => new Blog(blog))
-  // const promiseArray = blogObjects.map(blog => blog.save())
-  // await Promise.all(promiseArray)
+  await api
+    .post('/api/blogs')
+    .send(blogsToAdd[0])
+    .set('Authorization', `Bearer ${token1}`)
+  await api
+    .post('/api/blogs')
+    .send(blogsToAdd[1])
+    .set('Authorization', `Bearer ${token2}`)
 })
 
 const api = supertest(app)
@@ -40,6 +66,7 @@ describe('Blog API test', () => {
     await api
       .post('/api/blogs')
       .send(newBlog)
+      .set('Authorization', `Bearer ${token1}`)
       .expect(201)
       .expect('Content-Type', /application\/json/)
 
@@ -59,6 +86,7 @@ describe('Blog API test', () => {
     await api
       .post('/api/blogs')
       .send(blogWithoutLikes)
+      .set('Authorization', `Bearer ${token1}`)
       .expect(201)
     const blogsAtEnd = await helper.blogsInDb()
     const zeroLikeBlog = blogsAtEnd.find(blog => blog.title === blogWithoutLikes.title)
@@ -78,21 +106,44 @@ describe('Blog API test', () => {
     await api
       .post('/api/blogs')
       .send(blogWithoutTitle)
+      .set('Authorization', `Bearer ${token1}`)
       .expect(400)
     await api
       .post('/api/blogs')
       .send(blogWithoutUrl)
+      .set('Authorization', `Bearer ${token1}`)
       .expect(400)
 
   })
 
-  test('Task 4.13: a note can be deleted', async () => {
+  test('Deletion not authorized with wrong token', async () => {
     const blogsAtStart = await helper.blogsInDb()
     const blogToDelete = blogsAtStart[0]
 
 
     await api
       .delete(`/api/blogs/${blogToDelete.id}`)
+      .set('Authorization', `Bearer ${token2}`)
+      .expect(401)
+
+    const blogsAtEnd = await helper.blogsInDb()
+
+    expect(blogsAtEnd).toHaveLength(
+      helper.initialBlogs.length
+    )
+
+    const titles = blogsAtEnd.map(blog => blog.title)
+
+    expect(titles).toContain(blogToDelete.title)
+  })
+
+  test('Deletion successful with the right token', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToDelete = blogsAtStart[0]
+
+    await api
+      .delete(`/api/blogs/${blogToDelete.id}`)
+      .set('Authorization', `Bearer ${token1}`)
       .expect(204)
 
     const blogsAtEnd = await helper.blogsInDb()
@@ -136,6 +187,7 @@ describe('Blog API test', () => {
     await api
       .post('/api/blogs')
       .send(newBlog)
+      .set('Authorization', `Bearer ${token1}`)
       .expect(400)
 
     const blogsAtEnd = await helper.blogsInDb()
@@ -145,8 +197,11 @@ describe('Blog API test', () => {
   test('a specific blog can be viewed', async () => {
     const blogsAtStart = await helper.blogsInDb()
 
-    const blogToView = blogsAtStart[0]
-
+    let blogToView = blogsAtStart[0]
+    blogToView = {
+      ...blogToView,
+      user: blogToView.user.toString()
+    }
 
     const resultBlog = await api
       .get(`/api/blogs/${blogToView.id}`)
