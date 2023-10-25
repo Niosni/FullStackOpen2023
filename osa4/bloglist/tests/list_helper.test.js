@@ -1,38 +1,93 @@
 const listHelper = require('../utils/list_helper')
 
-describe('favorite blog', () => {
-  test('empty object', () => {
-    const result = listHelper.favoriteBlog({})
-    expect(result).toEqual(null)
+describe('listhelper tests / Task 4.3', () => {
+  test('dummy returns one', () => {
+    const result = listHelper.dummy(blogs)
+    expect(result).toBe(1)
   })
 
-  test('of one blog', () => {
-    const result = listHelper.favoriteBlog(listWithOneBlog)
-    expect(result).toEqual(mostLikedBlog)
+  describe('total likes / Task 4.4', () => {
+    test('of empty list is zero', () => {
+      const result = listHelper.totalLikes([])
+      expect(result).toBe(0)
+    })
+
+    test('when list has only one blog equals the likes of that', () => {
+      const result = listHelper.totalLikes(listWithOneBlog)
+      expect(result).toBe(12)
+    })
+
+    test('when list has multiple blogs in it', () => {
+      const result = listHelper.totalLikes(blogs)
+      expect(result).toBe(36)
+    })
   })
 
-  test('when list has multiple blogs in it', () => {
-    const result = listHelper.favoriteBlog(blogs)
-    expect(result).toEqual(mostLikedBlog)
+  describe('favorite blog / Task 4.5', () => {
+    test('empty object', () => {
+      const result = listHelper.favoriteBlog({})
+      expect(result).toEqual(null)
+    })
+
+    test('of one blog', () => {
+      const result = listHelper.favoriteBlog(listWithOneBlog)
+      expect(result).toEqual(mostLikedBlog)
+    })
+
+    test('when list has multiple blogs in it', () => {
+      const result = listHelper.favoriteBlog(blogs)
+      expect(result).toEqual(mostLikedBlog)
+    })
   })
+
+  describe('Most blogs written / Task 4.6', () => {
+    test('Many blogs', () => {
+      const result = listHelper.mostBlogs(blogs)
+      expect(result).toEqual(recordBlogger)
+    })
+    test('List with one blog', () => {
+      const result = listHelper.mostBlogs(listWithOneBlog)
+      const comparisonObj = {
+        author: listWithOneBlog[0].author,
+        blogs: 1
+      }
+      expect(result).toEqual(comparisonObj)
+    })
+    test('of empty list', () => {
+      const result = listHelper.mostBlogs([])
+      expect(result).toBeNaN()
+    })
+  })
+
+  describe('Most likes on blogs / Task 4.7', () => {
+    test('Many blogs', () => {
+      const result = listHelper.mostLikes(blogs)
+      expect(result).toEqual(popularBlogger)
+    })
+    test('List with one blog', () => {
+      const result = listHelper.mostLikes(listWithOneBlog)
+      const comparisonObj = {
+        author: listWithOneBlog[0].author,
+        likes: listWithOneBlog[0].likes
+      }
+      expect(result).toEqual(comparisonObj)
+    })
+    test('of empty list', () => {
+      const result = listHelper.mostLikes([])
+      expect(result).toBeNaN()
+    })
+  })
+
 })
+const recordBlogger = {
+  author: 'Robert C. Martin',
+  blogs: 3
+}
 
-describe('total likes', () => {
-  test('of empty list is zero', () => {
-    const result = listHelper.totalLikes([])
-    expect(result).toBe(0)
-  })
-
-  test('when list has only one blog equals the likes of that', () => {
-    const result = listHelper.totalLikes(listWithOneBlog)
-    expect(result).toBe(12)
-  })
-
-  test('when list has multiple blogs in it', () => {
-    const result = listHelper.totalLikes(blogs)
-    expect(result).toBe(36)
-  })
-})
+const popularBlogger = {
+  author: 'Edsger W. Dijkstra',
+  likes: 17
+}
 
 const mostLikedBlog = {
   title: 'Canonical string reduction',

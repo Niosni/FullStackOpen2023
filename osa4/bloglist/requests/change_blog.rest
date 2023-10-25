@@ -1,0 +1,8 @@
+###
+PUT http://localhost:3001/api/blogs/653914781002b2b645661b32
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjY1MzkxNDdiYjQ3NTJkMmE2MzRlNGU5NiIsImlhdCI6MTY5ODI0MDE0MSwiZXhwIjoxNjk4MjQzNzQxfQ.Fv2RlKtGbwj1x3GfWypcDNly5FuDjt94FWLCmC-d4XU
+
+{
+  "title": "New title22"
+}

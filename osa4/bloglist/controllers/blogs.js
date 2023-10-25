@@ -46,6 +46,12 @@ blogsRouter.delete('/:id', async (request, response, next) => {
 
   if (user.id.toString() === blog.user._id.toString()) {
     await Blog.findByIdAndRemove(request.params.id)
+    // Remove the blog from user field blogs aw well
+    const filteredBlogs = user.blogs.filter(blogId => blogId.toString() !== request.params.id)
+    const userObj = await User.findById(user.id)
+    userObj.blogs = filteredBlogs
+    await userObj.save()
+
     response.status(204).end()
   } else {
     return response.status(401).json({ error: 'Blog can only be removed by the user who added it.' })
