@@ -10,8 +10,8 @@ const App = () => {
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
-  const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('') 
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const App = () => {
       fontStyle: 'italic',
       fontSize: 16
     }
-  
+
     return (
       <div style={footerStyle}>
         <br />
@@ -52,13 +52,14 @@ const App = () => {
   const toggleImportanceOf = id => {
     const note = notes.find(n => n.id === id)
     const changedNote = { ...note, important: !note.important }
-  
+
     noteService
       .update(id, changedNote)
       .then(returnedNote => {
         setNotes(notes.map(note => note.id !== id ? note : returnedNote))
       })
       .catch(error => {
+        console.log(error.message)
         setErrorMessage(
           `Note '${note.content}' was already removed from server`
         )
@@ -75,7 +76,7 @@ const App = () => {
       content: newNote,
       important: Math.random() > 0.5,
     }
-  
+
     noteService
       .create(noteObject)
       .then(returnedNote => {
@@ -115,7 +116,7 @@ const App = () => {
     <form onSubmit={handleLogin}>
       <div>
         username
-          <input
+        <input
           type="text"
           value={username}
           name="Username"
@@ -124,7 +125,7 @@ const App = () => {
       </div>
       <div>
         password
-          <input
+        <input
           type="password"
           value={password}
           name="Password"
@@ -132,7 +133,7 @@ const App = () => {
         />
       </div>
       <button type="submit">login</button>
-    </form>      
+    </form>
   )
 
   const noteForm = () => (
@@ -142,7 +143,7 @@ const App = () => {
         onChange={handleNoteChange}
       />
       <button type="submit">save</button>
-    </form>  
+    </form>
   )
 
   const logoutUser = () => {
@@ -157,8 +158,8 @@ const App = () => {
   }
 
   const notesToShow = showAll
-  ? notes
-  : notes.filter(note => note.important)
+    ? notes
+    : notes.filter(note => note.important)
 
   return (
     <div>
@@ -168,9 +169,9 @@ const App = () => {
 
       {!user && loginForm()}
       {user && <div>
-       <p>{user.name} logged in <button onClick={logoutUser}>Logout</button></p>
-       
-         {noteForm()}
+        <p>{user.name} logged in <button onClick={logoutUser}>Logout</button></p>
+
+        {noteForm()}
       </div>
       }
 
@@ -180,10 +181,10 @@ const App = () => {
         </button>
       </div>
       <ul>
-        {notesToShow.map((note, i) => 
+        {notesToShow.map((note, i) =>
           <Note
             key={i}
-            note={note} 
+            note={note}
             toggleImportance={() => toggleImportanceOf(note.id)}
           />
         )}
