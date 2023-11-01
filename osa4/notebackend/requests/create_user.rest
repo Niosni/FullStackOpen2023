@@ -7,3 +7,15 @@ Content-Type: application/json
   "name": "VS Code REST test",
   "password": "secret"
 }
+
+###
+
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+
+{
+  "username": "test",
+  "name": "Tester user",
+  "password": "test"
+}
