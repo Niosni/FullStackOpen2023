@@ -12,8 +12,6 @@ const App = () => {
   const [notes, setNotes] = useState(null)
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [loginVisible, setLoginVisible] = useState(false)
 
@@ -81,21 +79,16 @@ const App = () => {
       })
   }
 
-  const handleLogin = async (event) => {
-    event.preventDefault()
-    console.log('logging in with', username, password)
+  const login = async (userObject) => {
+    console.log('logging in with', JSON.stringify(userObject))
     try {
-      const user = await loginService.login({
-        username, password,
-      })
+      const user = await loginService.login(userObject)
       window.localStorage.setItem(
         'loggedNoteappUser', JSON.stringify(user)
       )
 
       noteService.setToken(user.token)
       setUser(user)
-      setUsername('')
-      setPassword('')
     } catch (exception) {
       setErrorMessage('wrong credentials')
       setTimeout(() => {
@@ -103,6 +96,7 @@ const App = () => {
       }, 5000)
     }
   }
+
   const loginForm = () => {
     const hideWhenVisible = { display: loginVisible ? 'none' : '' }
     const showWhenVisible = { display: loginVisible ? '' : 'none' }
@@ -114,11 +108,7 @@ const App = () => {
         </div>
         <div style={showWhenVisible}>
           <LoginForm
-            username={username}
-            password={password}
-            handleUsernameChange={({ target }) => setUsername(target.value)}
-            handlePasswordChange={({ target }) => setPassword(target.value)}
-            handleSubmit={handleLogin}
+            login={login}
           />
           <button onClick={() => setLoginVisible(false)}>cancel</button>
         </div>
