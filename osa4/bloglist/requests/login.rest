@@ -1,9 +1,17 @@
-POST http://localhost:3001/api/login
+POST http://localhost:3003/api/login
 Content-Type: application/json
 
 {
   "username": "root",
   "password": "sekret"
+}
+###
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+  "username": "niosni",
+  "password": "salasana"
 }
 ###
 POST http://localhost:3001/api/login

@@ -1,8 +1,9 @@
 ###
-PUT http://localhost:3001/api/blogs/653914781002b2b645661b32
+PUT http://localhost:3003/api/blogs/65437e1d37008ceb8e96b013
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjY1MzkxNDdiYjQ3NTJkMmE2MzRlNGU5NiIsImlhdCI6MTY5ODI0MDE0MSwiZXhwIjoxNjk4MjQzNzQxfQ.Fv2RlKtGbwj1x3GfWypcDNly5FuDjt94FWLCmC-d4XU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pb3NuaSIsImlkIjoiNjU0MDBhMGYwY2E1MzUyZTU5OTRjZmE2IiwiaWF0IjoxNjk4OTUzNDk4LCJleHAiOjE2OTg5NTcwOTh9.XfvdIqzulh6T4ksfX3t4u3PD7mGDX5KdYE0oL9yn8ls
 
 {
-  "title": "New title22"
+  "title": "Newer title",
+  "likes": 3
 }
