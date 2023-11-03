@@ -1,9 +1,10 @@
-import { useState } from "react"
+import { useState } from 'react'
+import PropTypes from 'prop-types'
 
-const blogForm = ({ addBlog }) => {
-  const [newTitle, setNewTitle] = useState("")
-  const [newAuthor, setNewAuthor] = useState("")
-  const [newUrl, setNewUrl] = useState("")
+const BlogForm = ({ addBlog }) => {
+  const [newTitle, setNewTitle] = useState('')
+  const [newAuthor, setNewAuthor] = useState('')
+  const [newUrl, setNewUrl] = useState('')
 
   const createBlog = async (event) => {
     event.preventDefault()
@@ -13,19 +14,19 @@ const blogForm = ({ addBlog }) => {
       url: newUrl,
     }
     addBlog(blogObject)
-    setNewTitle("")
-    setNewAuthor("")
-    setNewUrl("")
+    setNewTitle('')
+    setNewAuthor('')
+    setNewUrl('')
   }
 
-  return ( 
+  return (
     <form onSubmit={createBlog}>
       <label>Title: </label>
       <input
         id="title"
         name="title"
         value={newTitle}
-        onChange={event=>setNewTitle(event.target.value)}
+        onChange={event => setNewTitle(event.target.value)}
       />
       <br/>
       <label>Author: </label>
@@ -33,7 +34,7 @@ const blogForm = ({ addBlog }) => {
         id="author"
         name="author"
         value={newAuthor}
-        onChange={event=>setNewAuthor(event.target.value)}
+        onChange={event => setNewAuthor(event.target.value)}
       />
       <br/>
       <label>Url: </label>
@@ -41,7 +42,7 @@ const blogForm = ({ addBlog }) => {
         id="url"
         name="url"
         value={newUrl}
-        onChange={event=>setNewUrl(event.target.value)}
+        onChange={event => setNewUrl(event.target.value)}
       />
       <br/>
       <button type="submit">Create</button>
@@ -49,4 +50,6 @@ const blogForm = ({ addBlog }) => {
   )
 }
 
-export default blogForm
+BlogForm.propTypes = { addBlog: PropTypes.func.isRequired }
+
+export default BlogForm

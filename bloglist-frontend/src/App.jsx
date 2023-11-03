@@ -49,14 +49,14 @@ const App = () => {
       setUser(user)
       loginRef.current.toggleVisibility()
       setNotificationMsg(
-        `Login successful`
+        'Login successful'
       )
       setTimeout(() => {
         setNotificationMsg(null)
       }, notificationTime)
     } catch (exception) {
       setNotificationMsg(
-        `Login failed`
+        'Login failed'
       )
       setTimeout(() => {
         setNotificationMsg(null)
@@ -86,16 +86,17 @@ const App = () => {
   const BlogsList = () => {
     return (
       <div>
-      <h2>blogs</h2>
+        <h2>blogs</h2>
         { blogs.map(blog =>
-          <Blog 
+          <Blog
+            key={blog.id}
             blog={blog}
             handleLike={handleLike}
-            handleRemove={handleRemove} 
+            handleRemove={handleRemove}
             user={user}
-            />
+          />
         )}
-    </div>
+      </div>
     )
   }
 
@@ -110,7 +111,7 @@ const App = () => {
       }, notificationTime)
 
     } catch (error) {
-      setNotificationMsg(`Creation failed.`)
+      setNotificationMsg('Creation failed.')
       setTimeout(() => {
         setNotificationMsg(null)
       }, notificationTime)
@@ -119,7 +120,7 @@ const App = () => {
 
   const handleRemove = async (blogObject) => {
     if (window.confirm(`Do you really want to remove ${blogObject.title} by ${blogObject.author}`)) {
-      if (user.username == blogObject.user.username) {
+      if (user.username === blogObject.user.username) {
         const response = await blogService.remove(blogObject.id)
         const updatedBlogs = blogs.filter(blog => blog.id !== blogObject.id)
         setBlogs(updatedBlogs)
@@ -129,18 +130,18 @@ const App = () => {
 
   return (
     <div>
-      <div style={{display: 'flex'}}>
+      <div style={{ display: 'flex' }}>
         <h1>Bloglist app</h1>
         <Notification message={notificationMsg} />
       </div>
 
-      { !user && 
+      { !user &&
       <Togglable buttonLabel="Login" ref={loginRef}>
         <Login login={handleLogin} />
       </Togglable>
       }
 
-      { user && 
+      { user &&
         <div>
           <p>{user.name} logged in</p>
           <button className="logoutButton" onClick={logoutUser}>Logout</button>
@@ -148,7 +149,7 @@ const App = () => {
             <Blogform addBlog={addBlog}/>
           </Togglable>
           <BlogsList/>
-          
+
         </div>
       }
 
